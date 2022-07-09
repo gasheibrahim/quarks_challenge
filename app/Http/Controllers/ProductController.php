@@ -40,8 +40,8 @@ class ProductController extends Controller
     {
         $requestData = $request->all();
         $fileName = time() . $request->file('image')->getClientoriginalName();
-        $path = $request->file('image')->storeAs('images', $fileName, 'public');
-        $requestData['image'] = '/storage/' . $path;
+        $path = $request->file('image')->storeAs('images', $fileName, 'minio');
+        $requestData['image'] = $path;
         Product::create($requestData);
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
@@ -80,8 +80,8 @@ class ProductController extends Controller
     {
         $requestData = $request->all();
         $fileName = time() . $request->file('image')->getClientoriginalName();
-        $path = $request->file('image')->storeAs('images', $fileName, 'public');
-        $requestData['image'] = '/storage/' . $path;
+        $path = $request->file('image')->storeAs('images', $fileName, 'minio');
+        $requestData['image'] = $path;
         $product->update($request->all());
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
