@@ -38,10 +38,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $requestData = $request->all();
+        $input = $request->all();
         $path = $request->file('image')->store('images');
-        $requestData['image'] = $path;
-        Product::create($requestData);
+        $input['image'] = $path;
+        Product::create($input);
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
     }
@@ -77,10 +77,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $requestData = $request->all();
+        $input = $request->all();
         $path = $request->file('image')->store('products');
-        $requestData['image'] = $path;
-        $product->update($request->all());
+        $input['image'] = $path;
+        $product->update($input);
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
     }
