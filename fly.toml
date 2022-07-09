@@ -3,14 +3,16 @@
 app = "quarks-challenge"
 kill_signal = "SIGINT"
 kill_timeout = 5
+processes = []
+
+[build]
+  builder = "heroku/buildpacks:20"
+
 [processes]
 web = "sh -c '[ ! -f /workspace/.env ] && cp /workspace/.env.example /workspace/.env  && php artisan migrate --force -n -q && php artisan key:generate --force && vendor/bin/heroku-php-apache2 public/'"
 
 [env]
-  APP_ENV = "production"
-  LOG_CHANNEL = "stderr"
-  LOG_LEVEL = "info"
-  LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
+  PORT = "8080"
 
 [experimental]
   allowed_public_ports = []
@@ -19,7 +21,7 @@ web = "sh -c '[ ! -f /workspace/.env ] && cp /workspace/.env.example /workspace/
 [[services]]
   http_checks = []
   internal_port = 8080
-  processes = ["app"]
+  processes = ["web"]
   protocol = "tcp"
   script_checks = []
   [services.concurrency]
