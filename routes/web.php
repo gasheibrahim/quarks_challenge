@@ -3,12 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Models\Product;
-use App\Models\Cart;
-use App\Models\Checkout;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
