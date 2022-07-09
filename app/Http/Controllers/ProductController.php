@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $products = Product::latest()->paginate(5);
 
-        return view('products.index',compact('products'))
+        return view('products.index', compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -38,26 +38,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required',
-        //     'detail' => 'required',
-        //     'price' => 'required',
-        //     'quantity' => 'required',
-        //     'image' => 'required'
-        // ]);
-        // $request->image->move(public_path('images'), $imageName);
-
-        // Product::create($request->all());
-        // return redirect()->route('products.index')
-        //                 ->with('success','Product created successfully.');
-
         $requestData = $request->all();
-        $fileName = time().$request->file('image')->getClientoriginalName();
+        $fileName = time() . $request->file('image')->getClientoriginalName();
         $path = $request->file('image')->storeAs('images', $fileName, 'public');
-        $requestData['image'] = '/storage/'.$path;
+        $requestData['image'] = '/storage/' . $path;
         Product::create($requestData);
         return redirect()->route('products.index')
-                        ->with('success','Product created successfully.');
+            ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -68,7 +55,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.show',compact('product'));
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -79,7 +66,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit',compact('product'));
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -92,29 +79,12 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $requestData = $request->all();
-        $fileName = time().$request->file('image')->getClientoriginalName();
+        $fileName = time() . $request->file('image')->getClientoriginalName();
         $path = $request->file('image')->storeAs('images', $fileName, 'public');
-        $requestData['image'] = '/storage/'.$path;
+        $requestData['image'] = '/storage/' . $path;
         $product->update($request->all());
         return redirect()->route('products.index')
-                        ->with('success','Product created successfully.');
-        // $request->validate([
-        //     'product_name' => 'required',
-        //     'detail' => 'required',
-        //     'price' => 'required',
-        //     'quantity' => 'required',
-        //     'image' => 'required'
-        // ]);
-        // $filename="";
-        // if($request->hasFile('image')){
-        //     $filename=$request->file('image')->store('images','public');
-        // }else{
-        //     $filename=Null;
-        // }
-        // $product->update($request->all());
-
-        // return redirect()->route('products.index')
-        //                 ->with('success','Product updated successfully');
+            ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -128,6 +98,6 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products.index')
-                        ->with('success','Product deleted successfully');
+            ->with('success', 'Product deleted successfully');
     }
 }
