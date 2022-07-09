@@ -39,8 +39,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $requestData = $request->all();
-        $fileName = time() . $request->file('image')->getClientoriginalName();
-        $path = $request->file('image')->storeAs('images', $fileName, 'minio');
+        $path = $request->file('image')->store('images');
         $requestData['image'] = $path;
         Product::create($requestData);
         return redirect()->route('products.index')
@@ -79,8 +78,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $requestData = $request->all();
-        $fileName = time() . $request->file('image')->getClientoriginalName();
-        $path = $request->file('image')->storeAs('images', $fileName, 'minio');
+        $path = $request->file('image')->store('products');
         $requestData['image'] = $path;
         $product->update($request->all());
         return redirect()->route('products.index')
